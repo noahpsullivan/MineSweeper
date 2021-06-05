@@ -1,8 +1,18 @@
 abstract class Square {
 
-    private String element = "x";
-    private boolean flagged = false;
-    private boolean uncovered = false;
+    private String element;
+    private boolean flagged;
+    private boolean uncovered;
+
+    public Square(String element, boolean flagged, boolean uncovered) {
+        this.element = element;
+        this.flagged = flagged;
+        this.uncovered = uncovered;
+    }
+
+    public Square() {
+        this("   x", false, false);
+    }
 
     public boolean isFlagged() {
         return flagged;
@@ -30,8 +40,9 @@ abstract class Square {
         this.element = element;
     }
 
+    @Override
     public String toString() {
-        ;
+        return element;
     }
 
     public abstract boolean uncover();
