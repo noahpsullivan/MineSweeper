@@ -1,7 +1,4 @@
 public class MineSquare extends Square {
-//    public boolean uncover() {
-//        ;
-//    }
 
     @Override
     public boolean uncover() {
