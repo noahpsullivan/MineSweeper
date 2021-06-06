@@ -2,7 +2,14 @@ public class MineSquare extends Square {
 
     @Override
     public boolean uncover() {
-        return false;
+        if(!isFlagged()){
+            setUncovered();
+            setElement("*");
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override

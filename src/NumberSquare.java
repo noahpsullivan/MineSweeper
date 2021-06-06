@@ -12,7 +12,19 @@ public class NumberSquare extends Square {
 
     @Override
     public boolean uncover() {
-        return false;
+        if(!isFlagged()){
+            setUncovered();
+            if(neighborMines == 0){
+                setElement("_");
+            }
+            else{
+                setElement(Integer.toString(neighborMines));
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public int getNeighborMines(){

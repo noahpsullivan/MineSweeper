@@ -11,7 +11,7 @@ abstract class Square {
     }
 
     public Square() {
-        this("   x", false, false);
+        this("x", false, false);
     }
 
     public boolean isFlagged() {
@@ -42,7 +42,7 @@ abstract class Square {
 
     @Override
     public String toString() {
-        return element;
+        return String.format("   %s", element);
     }
 
     public abstract boolean uncover();
