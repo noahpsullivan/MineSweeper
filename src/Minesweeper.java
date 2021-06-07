@@ -9,8 +9,13 @@ public class Minesweeper {
         }
     }
 
-    public char getInput(){
+    public void getInput(){
         Scanner keyboard = new Scanner(System.in);
-
+        String input = keyboard.nextLine();
+        input = input.replaceAll("\\s", "").toLowerCase();
+        int length = input.length();
+        if(length == 1 && input.equals("q")){
+            System.out.println("yuh");
+        }
     }
 }
