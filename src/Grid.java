@@ -87,9 +87,10 @@ public class Grid {
                             int checkY = col + rangeCol;
                             if (((0 <= checkX) && (checkX < height)) && (0 <= checkY) && (checkY < width)) {
                                 if (!(grid[checkX][checkY] instanceof MineSquare)) {
-                                    grid[checkX][checkY].uncover();
-                                    numSquaresUncovered++;
-
+                                    boolean noFlag = grid[checkX][checkY].uncover();
+                                    if (noFlag) {
+                                        numSquaresUncovered++;
+                                    }
                                 }
                             }
                         }
@@ -107,8 +108,10 @@ public class Grid {
                             int checkY = col + rangeCol;
                             if (((0 <= checkX) && (checkX < height)) && (0 <= checkY) && (checkY < width)) {
                                 if (!(grid[checkX][checkY] instanceof MineSquare)) {
-                                    grid[checkX][checkY].uncover();
-                                    numSquaresUncovered++;
+                                    boolean noFlag = grid[checkX][checkY].uncover();
+                                    if(noFlag) {
+                                        numSquaresUncovered++;
+                                    }
                                 }
                             }
                         }
@@ -151,8 +154,19 @@ public class Grid {
         // Uses StringBuilder to create grid for output
         StringBuilder sb = new StringBuilder();
 
+        // Buffer before column numbers
+        sb.append(String.format("%4s", ""));
+
+        // Adds column numbers
+        for (int col = 0; col < width; col++){
+            sb.append(String.format("%4d", col));
+        }
+        sb.append(System.lineSeparator());
+
         // Iterates over spots
         for (int row = 0; row < height; row++) {
+            // Adds row number
+            sb.append(String.format("%4d", row));
             for (int col = 0; col < width; col++) {
                 // Appends string representation of spot
                 sb.append(grid[row][col]);
