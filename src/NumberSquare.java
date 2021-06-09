@@ -12,7 +12,7 @@ public class NumberSquare extends Square {
 
     @Override
     public boolean uncover() {
-        if(!isFlagged()){
+        if(!isFlagged() && !isUncovered()){
             setUncovered();
             if(neighborMines == 0){
                 setElement("_");
