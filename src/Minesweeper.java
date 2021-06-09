@@ -8,6 +8,7 @@ public class Minesweeper {
         int numMines = 10;
         Grid gameBoard = new Grid(width, height, numMines);
         Status gameState = Status.OK;
+        System.out.println(gameBoard);
         while (gameState == Status.OK) {
 
             // Input loop of doom
@@ -15,7 +16,6 @@ public class Minesweeper {
             ReturnInput input = null;
             while (!inputValid) {
                 try {
-                    System.out.println(gameBoard);
                     System.out.println("Options: (U)ncover r c,   (F)lag r c,   (Q)uit");
                     input = getInput();
                     inputValid = checkInput(input, width, height);
@@ -32,14 +32,19 @@ public class Minesweeper {
             } else {
                 gameState = Status.QUIT;
             }
+
+            if (gameState == Status.OK){
+                System.out.println(gameBoard);
+            }
         }
 
         // Responds to game state change
-        System.out.println(gameBoard);
         if (gameState == Status.WIN) {
             System.out.println("YOU'RE WINNER !"); // Big Rigs was ahead of its time
         }
         else if (gameState == Status.MINE) {
+            gameBoard.exposeMines();
+            System.out.println(gameBoard);
             System.out.println("YOU HAVE DIED OF DYSENTERY (and a mine)"); // I love The Oregon Trail
         }
         else if (gameState == Status.QUIT) {
