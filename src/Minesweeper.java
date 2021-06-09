@@ -15,6 +15,7 @@ public class Minesweeper {
             ReturnInput input = null;
             while (!inputValid) {
                 try {
+                    System.out.println(gameBoard);
                     System.out.println("Options: (U)ncover r c,   (F)lag r c,   (Q)uit");
                     input = getInput();
                     inputValid = checkInput(input, width, height);
