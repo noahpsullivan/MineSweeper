@@ -87,8 +87,8 @@ public class Grid {
                             int checkY = col + rangeCol;
                             if (((0 <= checkX) && (checkX < height)) && (0 <= checkY) && (checkY < width)) {
                                 if (!(grid[checkX][checkY] instanceof MineSquare)) {
-                                    boolean noFlag = grid[checkX][checkY].uncover();
-                                    if (noFlag) {
+                                    boolean canUncover = grid[checkX][checkY].uncover();
+                                    if (canUncover) {
                                         numSquaresUncovered++;
                                     }
                                 }
@@ -108,8 +108,8 @@ public class Grid {
                             int checkY = col + rangeCol;
                             if (((0 <= checkX) && (checkX < height)) && (0 <= checkY) && (checkY < width)) {
                                 if (!(grid[checkX][checkY] instanceof MineSquare)) {
-                                    boolean noFlag = grid[checkX][checkY].uncover();
-                                    if(noFlag) {
+                                    boolean canUncover = grid[checkX][checkY].uncover();
+                                    if(canUncover) {
                                         numSquaresUncovered++;
                                     }
                                 }
