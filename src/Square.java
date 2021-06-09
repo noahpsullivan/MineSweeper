@@ -23,7 +23,10 @@ abstract class Square {
     }
 
     public void flagSquare() {
-        if (!isFlagged()) {
+        if (isUncovered()){
+            this.flagged = false;
+        }
+        else if (!isFlagged()) {
             setElement("f");
             this.flagged = true;
         } else {
