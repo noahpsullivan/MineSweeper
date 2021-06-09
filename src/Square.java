@@ -42,7 +42,7 @@ abstract class Square {
 
     @Override
     public String toString() {
-        return String.format("   %s", element);
+        return String.format("%4s", element);
     }
 
     public abstract boolean uncover();
