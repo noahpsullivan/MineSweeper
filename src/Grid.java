@@ -76,8 +76,9 @@ public class Grid {
             NumberSquare numSquare = (NumberSquare) square;
             int number = numSquare.getNeighborMines();
             if (number == 0) {
-                grid[row][col].uncover();
-                numSquaresUncovered++;
+                if(grid[row][col].uncover()){
+                    numSquaresUncovered++;
+                }
                 int[] range = {-2, -1, 0, 1, 2};
                 for (int rangeRow : range) {
                     for (int rangeCol : range) {
@@ -87,8 +88,7 @@ public class Grid {
                             int checkY = col + rangeCol;
                             if (((0 <= checkX) && (checkX < height)) && (0 <= checkY) && (checkY < width)) {
                                 if (!(grid[checkX][checkY] instanceof MineSquare)) {
-                                    boolean canUncover = grid[checkX][checkY].uncover();
-                                    if (canUncover) {
+                                    if(grid[checkX][checkY].uncover()){
                                         numSquaresUncovered++;
                                     }
                                 }
@@ -97,8 +97,9 @@ public class Grid {
                     }
                 }
             } else if (number == 1) {
-                grid[row][col].uncover();
-                numSquaresUncovered++;
+                if(grid[row][col].uncover()){
+                    numSquaresUncovered++;
+                }
                 int[] range = {-1, 0, 1};
                 for (int rangeRow : range) {
                     for (int rangeCol : range) {
@@ -108,8 +109,7 @@ public class Grid {
                             int checkY = col + rangeCol;
                             if (((0 <= checkX) && (checkX < height)) && (0 <= checkY) && (checkY < width)) {
                                 if (!(grid[checkX][checkY] instanceof MineSquare)) {
-                                    boolean canUncover = grid[checkX][checkY].uncover();
-                                    if(canUncover) {
+                                    if (grid[checkX][checkY].uncover()){
                                         numSquaresUncovered++;
                                     }
                                 }
@@ -118,8 +118,9 @@ public class Grid {
                     }
                 }
             } else {
-                square.uncover();
-                numSquaresUncovered++;
+                if(square.uncover()) {
+                    numSquaresUncovered++;
+                }
             }
         }
         if(numSquaresUncovered == ((width*height)-numMines)){
