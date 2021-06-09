@@ -24,14 +24,12 @@ public class Minesweeper {
                 }
             }
 
-            if(input.action == 'U'){
+            if (input.action == 'U') {
                 gameState = gameBoard.uncoverSquare(input.row, input.col);
-            }
-            else if(input.action == 'F'){
+            } else if (input.action == 'F') {
                 gameBoard.flagSquare(input.row, input.col);
-            }
-            else{
-                gameState = Status.MINE;
+            } else {
+                gameState = Status.QUIT;
             }
 
             System.out.println(gameBoard);
