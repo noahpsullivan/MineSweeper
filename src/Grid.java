@@ -68,12 +68,16 @@ public class Grid {
     }
 
     public Status uncoverSquare(int row, int col) {
-        NumberSquare square = (NumberSquare) grid[row][col];
+        Square square = grid[row][col];
         if (square.isMine()) {
             return Status.MINE;
         } else {
-            int number = square.getNeighborMines();
+            // Need to typecast to NumberSquare because getNeighborMines is not an abstract method in Square
+            NumberSquare numSquare = (NumberSquare) square;
+            int number = numSquare.getNeighborMines();
             if (number == 0) {
+                grid[row][col].uncover();
+                numSquaresUncovered++;
                 int[] range = {-2, -1, 0, 1, 2};
                 for (int rangeRow : range) {
                     for (int rangeCol : range) {
@@ -92,6 +96,8 @@ public class Grid {
                     }
                 }
             } else if (number == 1) {
+                grid[row][col].uncover();
+                numSquaresUncovered++;
                 int[] range = {-1, 0, 1};
                 for (int rangeRow : range) {
                     for (int rangeCol : range) {

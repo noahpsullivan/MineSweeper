@@ -3,63 +3,98 @@ import java.util.Scanner;
 public class Minesweeper {
 
     public void runGame() {
-        Grid gameBoard = new Grid(12, 10, 10);
+        int width = 12;
+        int height = 10;
+        int numMines = 10;
+        Grid gameBoard = new Grid(width, height, numMines);
         Status gameState = Status.OK;
         while (gameState == Status.OK) {
-            gameState = Status.MINE;
+
+            // Input loop of doom
+            boolean inputValid = false;
+            ReturnInput input = null;
+            while (!inputValid) {
+                try {
+                    System.out.println("Options: (U)ncover r c,   (F)lag r c,   (Q)uit");
+                    input = getInput();
+                    inputValid = checkInput(input, width, height);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Oopsie Woopsie! You made a Fucky Wucky!");
+                }
+            }
+
+            if(input.action == 'U'){
+                gameState = gameBoard.uncoverSquare(input.row, input.col);
+            }
+            else if(input.action == 'F'){
+                gameBoard.flagSquare(input.row, input.col);
+            }
+            else{
+                gameState = Status.MINE;
+            }
+
+            System.out.println(gameBoard);
         }
     }
 
-    public ReturnInput getInput() throws IllegalArgumentException {
+    private ReturnInput getInput() throws IllegalArgumentException {
+        IllegalArgumentException badInput = new IllegalArgumentException();
         Scanner keyboard = new Scanner(System.in);
         String input = keyboard.nextLine();
-        String[] pieces = input.split("\\W");
+        String[] pieces = input.toUpperCase().split("\\W");
         int length = pieces.length;
-        try{
+        try {
             char action = pieces[0].charAt(0);
-            if(length == 1){
-                return new ReturnInput(action);
-            }
-            else if(length == 3){
+            if (length == 1) {
+                return new ReturnInput(action, false);
+            } else if (length == 3) {
                 int row = Integer.parseInt(pieces[1]);
                 int col = Integer.parseInt(pieces[2]);
-                return new ReturnInput(action, row, col);
+                return new ReturnInput(action, true, row, col);
+            } else {
+                throw badInput;
             }
-            else {
-                throw IllegalArgumentException;
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            throw badInput;
+        }
+    }
+
+    private boolean checkInput(ReturnInput input, int width, int height) {
+        IllegalArgumentException badInput = new IllegalArgumentException();
+        if (input.hasCoords) {
+            if ((input.action == 'F' || input.action == 'U') && onGrid(input.row, input.col, width, height)) {
+                return true;
+            } else {
+                throw badInput;
+            }
+        } else {
+            if (input.action == 'Q') {
+                return true;
+            } else {
+                throw badInput;
             }
         }
     }
 
-    private class ReturnInput {
-        private char action;
-        private int row;
-        private int col;
+    private boolean onGrid(int row, int col, int width, int height) {
+        return ((0 <= row && row < height) && (0 <= col && col < width));
+    }
 
-        public ReturnInput(char action, int row, int col) {
+    private static class ReturnInput {
+        final private char action;
+        final private boolean hasCoords;
+        final private int row;
+        final private int col;
+
+        private ReturnInput(char action, boolean hasCoords, int row, int col) {
             this.action = action;
+            this.hasCoords = hasCoords;
             this.row = row;
             this.col = col;
         }
 
-        public ReturnInput(char action) {
-            this(action, -1, -1);
-        }
-
-        public ReturnInput() {
-            this(Character.MIN_VALUE, -1, -1);
-        }
-
-        public char getAction() {
-            return action;
-        }
-
-        public int getRow() {
-            return row;
-        }
-
-        public int getCol() {
-            return col;
+        private ReturnInput(char action, boolean hasCoords) {
+            this(action, hasCoords, -1, -1);
         }
     }
 }
