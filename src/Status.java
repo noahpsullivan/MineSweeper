@@ -1,5 +1,6 @@
 public enum Status {
     OK,
     WIN,
-    MINE
+    MINE,
+    QUIT
 }
