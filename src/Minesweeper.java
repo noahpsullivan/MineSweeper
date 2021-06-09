@@ -24,6 +24,7 @@ public class Minesweeper {
                 }
             }
 
+            // Executes validated user commands
             if (input.action == 'U') {
                 gameState = gameBoard.uncoverSquare(input.row, input.col);
             } else if (input.action == 'F') {
@@ -31,8 +32,18 @@ public class Minesweeper {
             } else {
                 gameState = Status.QUIT;
             }
+        }
 
-            System.out.println(gameBoard);
+        // Responds to game state change
+        System.out.println(gameBoard);
+        if (gameState == Status.WIN) {
+            System.out.println("YOU'RE WINNER !"); // Big Rigs was ahead of its time
+        }
+        else if (gameState == Status.MINE) {
+            System.out.println("YOU HAVE DIED OF DYSENTERY (and a mine)"); // I love The Oregon Trail
+        }
+        else if (gameState == Status.QUIT) {
+            System.out.println("That's it -- RAGE QUIT"); // It's actually safer to mine at night
         }
     }
 
