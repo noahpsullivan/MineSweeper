@@ -4,10 +4,9 @@ import java.util.Random;
 
 /**
  * <p>
- * <code>Grid</code> is the class containing a two dimensional array of {@link Square} objects and the methods needed
- * to interact with them. Many methods in the <code>Grid</code> object call similar methods from the
- * <code>Square</code> object, such as how {@link #flagSquare(int, int) Grid.flagSquare} calls
- * {@link Square#flagSquare() Square.flagSquare}.
+ * Contains a two dimensional array of {@link Square} objects and the methods needed to interact with them. Many methods
+ * in the <code>Grid</code> object call similar methods from the <code>Square</code> object, such as how {@link
+ * #flagSquare(int, int) Grid.flagSquare} calls {@link Square#flagSquare() Square.flagSquare}.
  * </p>
  * <p>
  * The <code>Grid</code> object is created and called by {@link Minesweeper#runGame() Minesweeper.runGame} when a new
@@ -28,15 +27,15 @@ public class Grid {
     /**
      * Constructor for <code>Grid</code> class taking width, height, and number of mines.
      * <p>
-     * Creates the two dimensional array <code>grid</code> and randomly populates with given number of
-     * {@link MineSquare} objects. After mines are placed all other indexes are filled by {@link NumberSquare} objects.
-     * The {@link NumberSquare#NumberSquare(int, int, int) neighborMines} parameter in the <code>NumberSquare</code>
+     * Creates the two dimensional array <code>grid</code> and randomly populates with given number of {@link
+     * MineSquare} objects. After mines are placed all other indexes are filled by {@link NumberSquare} objects. The
+     * {@link NumberSquare#NumberSquare(int, int, int) neighborMines} parameter in the <code>NumberSquare</code>
      * constructor is filled using the {@link #getNeighbors(int, int) getNeighbors}, which runs independently of
      * <code>Square</code> initialization
      *
-     * @param width     int representing desired grid width
-     * @param height    int representing desired grid height
-     * @param numMines  int representing desired number of mines
+     * @param width    int representing desired grid width
+     * @param height   int representing desired grid height
+     * @param numMines int representing desired number of mines
      */
     public Grid(int width, int height, int numMines) {
 
@@ -98,9 +97,10 @@ public class Grid {
      * if given <code>grid</code> array element is an instance of {@link MineSquare}.
      * </p>
      *
-     * @param row   int of grid square row to be checked
-     * @param col   int of grid square column to be checked
-     * @return      int containing number of neighboring mines
+     * @param row int of grid square row to be checked
+     * @param col int of grid square column to be checked
+     *
+     * @return int containing number of neighboring mines
      */
     public int getNeighbors(int row, int col) {
         int[] range = {-1, 0, 1};
@@ -128,12 +128,13 @@ public class Grid {
      * has more than one neighboring mine uncovers only the <code>Square</code>. Returns {@link Status} enum depending
      * on outcome.
      *
-     * @param row   int of grid square row to be uncovered
-     * @param col   int of grid square column to be uncovered
-     * @return      <code>Status</code> enum of uncovered square:
-     *              <code>Status.MINE</code> if <code>Square</code> is a mine
-     *              <code>Status.WIN</code> if all <code>Square</code> objects successfully uncovered
-     *              <code>Status.OK</code> if game continues
+     * @param row int of grid square row to be uncovered
+     * @param col int of grid square column to be uncovered
+     *
+     * @return <code>Status</code> enum of uncovered square:
+     * <code>Status.MINE</code> if <code>Square</code> is a mine
+     * <code>Status.WIN</code> if all <code>Square</code> objects successfully uncovered
+     * <code>Status.OK</code> if game continues
      */
     public Status uncoverSquare(int row, int col) {
         Square square = grid[row][col];
@@ -219,8 +220,9 @@ public class Grid {
 
     /**
      * Toggles flag status on {@link Square} object. Removes flag if <code>Square</code> is already flagged.
-     * @param row   int of grid square row to be flagged
-     * @param col   int of grid square column to be flagged
+     *
+     * @param row int of grid square row to be flagged
+     * @param col int of grid square column to be flagged
      */
     public void flagSquare(int row, int col) {
         // Call Square.flagSquare. Plain and simple
@@ -232,11 +234,11 @@ public class Grid {
      * individual mines, flags, covered, and uncovered {@link Square} objects are handled by methods in their respective
      * classes.
      *
-     * @return  String interpretation of current grid state
+     * @return String interpretation of current grid state
      *
      * @see Square#flagSquare()
      * @see MineSquare#uncover()
-     * @see NumberSquare#uncover() 
+     * @see NumberSquare#uncover()
      */
     @Override
     public String toString() {

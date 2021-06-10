@@ -22,41 +22,52 @@ public class NumberSquare extends Square {
      * @param myRow         int containing row number
      * @param myCol         int containing column number
      */
-    public NumberSquare(int neighborMines, int myRow, int myCol){
+    public NumberSquare(int neighborMines, int myRow, int myCol) {
         this.neighborMines = neighborMines;
         this.myRow = myRow;
         this.myCol = myCol;
     }
 
     /**
-     * Attempts to uncover square, if able to uncover sets display <code>element</code>> accordingly. If there are no
-     * neighbor mines then the display <code>element</code> is set to "<code>_</code>"; otherwise it is set to the
-     * number of neighbor mines. Number of neighbor mines is retrieved using the
-     * {@link #getNeighborMines() getNeightborMines} method.
+     * <p>
+     * Attempts to uncover square, if able to uncover sets display <code>element</code> accordingly. Cannot be uncovered
+     * if {@link #isFlagged() isFlagged} or {@link #isUncovered() isUncovered} are true.
+     * </p>
+     * <p>
+     * If there are no neighbor mines then the display <code>element</code> is set to "<code>_</code>"; otherwise it is
+     * set to the number of neighbor mines. Number of neighbor mines is retrieved using the {@link #getNeighborMines()
+     * getNeightborMines} method.
+     * </p>
      *
-     * @return  boolean, <code>true</code> if uncover is successful, <code>false</code> if not
+     * @return boolean, <code>true</code> if uncover is successful, <code>false</code> if not
      */
     @Override
     public boolean uncover() {
-        if(!isFlagged() && !isUncovered()){
+        if (!isFlagged() && !isUncovered()) {
             setUncovered();
-            if(getNeighborMines() == 0){
+            if (getNeighborMines() == 0) {
                 setElement("_");
-            }
-            else{
+            } else {
                 setElement(Integer.toString(getNeighborMines()));
             }
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public int getNeighborMines(){
+    /**
+     * Getter for <code>neighborMines</code>
+     *
+     * @return int equal to <code>neighborMines</code>
+     */
+    public int getNeighborMines() {
         return neighborMines;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isMine() {
         return false;
