@@ -14,16 +14,13 @@ public class Minesweeper {
         while (gameState == Status.OK) {
 
             // Input loop of doom
-            boolean inputValid = false;
             ReturnInput input = null;
-            while (!inputValid) {
-                try {
-                    System.out.println("Options: (U)ncover r c,   (F)lag r c,   (Q)uit");
-                    input = getInput();
-                    inputValid = checkInput(input, width, height);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("Invalid Input");
-                }
+            try {
+                System.out.println("Options: (U)ncover r c,   (F)lag r c,   (Q)uit");
+                input = getInput();
+                checkInput(input, width, height);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid Input");
             }
 
             // Executes validated user commands
@@ -35,7 +32,7 @@ public class Minesweeper {
                 gameState = Status.QUIT;
             }
 
-            if (gameState == Status.OK){
+            if (gameState == Status.OK) {
                 System.out.println(gameBoard);
             }
         }
@@ -43,13 +40,11 @@ public class Minesweeper {
         // Responds to game state change
         if (gameState == Status.WIN) {
             System.out.println("YOU'RE WINNER !"); // Big Rigs was ahead of its time
-        }
-        else if (gameState == Status.MINE) {
+        } else if (gameState == Status.MINE) {
             gameBoard.exposeMines();
             System.out.println(gameBoard);
             System.out.println("YOU HAVE DIED OF DYSENTERY (and a mine)"); // I love The Oregon Trail
-        }
-        else if (gameState == Status.QUIT) {
+        } else if (gameState == Status.QUIT) {
             System.out.println("That's it -- RAGE QUIT"); // It's actually safer to mine at night
         }
     }
@@ -76,18 +71,14 @@ public class Minesweeper {
         }
     }
 
-    private boolean checkInput(ReturnInput input, int width, int height) {
+    private void checkInput(ReturnInput input, int width, int height) {
         IllegalArgumentException badInput = new IllegalArgumentException();
         if (input.hasCoords) {
-            if ((input.action == 'F' || input.action == 'U') && onGrid(input.row, input.col, width, height)) {
-                return true;
-            } else {
+            if ((input.action != 'F' && input.action != 'U') || !onGrid(input.row, input.col, width, height)) {
                 throw badInput;
             }
         } else {
-            if (input.action == 'Q') {
-                return true;
-            } else {
+            if (input.action != 'Q') {
                 throw badInput;
             }
         }
