@@ -20,11 +20,11 @@ public class NumberSquare extends Square {
     public boolean uncover() {
         if(!isFlagged() && !isUncovered()){
             setUncovered();
-            if(neighborMines == 0){
+            if(getNeighborMines() == 0){
                 setElement("_");
             }
             else{
-                setElement(Integer.toString(neighborMines));
+                setElement(Integer.toString(getNeighborMines()));
             }
             return true;
         }
