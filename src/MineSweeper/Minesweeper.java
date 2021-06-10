@@ -22,7 +22,7 @@ public class Minesweeper {
                     input = getInput();
                     inputValid = checkInput(input, width, height);
                 } catch (IllegalArgumentException e) {
-                    System.out.println("Oopsie Woopsie! You made a Fucky Wucky!");
+                    System.out.println("Invalid Input");
                 }
             }
 
