@@ -1,3 +1,5 @@
+package MineSweeper;
+
 public class MineSquare extends Square {
 
     @Override

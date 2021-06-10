@@ -1,3 +1,5 @@
+package MineSweeper;
+
 abstract class Square {
 
     private String element;
@@ -23,12 +25,17 @@ abstract class Square {
     }
 
     public void flagSquare() {
+        // Keeps already uncovered squares from being flagged/mislabeled as flagged
         if (isUncovered()){
             this.flagged = false;
         }
+
+        // Flags un-flagged square
         else if (!isFlagged()) {
             setElement("f");
             this.flagged = true;
+
+        // De-flags flagged square
         } else {
             setElement("x");
             this.flagged = false;

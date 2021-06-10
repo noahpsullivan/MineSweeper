@@ -1,3 +1,5 @@
+package MineSweeper;
+
 public class NumberSquare extends Square {
 
     private int neighborMines;
@@ -10,6 +12,10 @@ public class NumberSquare extends Square {
         this.myCol = myCol;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean uncover() {
         if(!isFlagged() && !isUncovered()){
@@ -27,10 +33,18 @@ public class NumberSquare extends Square {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNeighborMines(){
         return neighborMines;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isMine() {
         return false;
