@@ -217,14 +217,6 @@ public class Minesweeper {
         }
     }
 
-    public void chooseLevel() {
-        Scanner keyboard = new Scanner(System.in);
-        System.out.println("Choose Difficulty");
-        System.out.println("(B)eginner -- 8 x 8, 8 mines");
-        System.out.println("(I)ntermediate -- 10 x 12, 10 mines");
-        System.out.println("(E)xpert -- 16 x 20, 50 mines");
-    }
-
     /**
      * Internal class used to easily move user input for {@link Minesweeper}.
      */
