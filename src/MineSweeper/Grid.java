@@ -262,6 +262,9 @@ public class Grid {
                 // Appends string representation of spot
                 sb.append(grid[row][col]);
             }
+
+            // Appends newline to row
+            sb.append(System.lineSeparator());
         }
         // Returns StringBuilder as String
         return sb.toString();
