@@ -10,7 +10,18 @@ import java.util.Scanner;
 public class Minesweeper {
 
     /**
-     * Responsible for running Minesweeper game. Creates {@link Grid} object, gets input from the user, and executes
+     * Responsible for starting individual games of minesweeper by calling {@link #runGame() runGame}. Determines what
+     * difficulty the user would like to play and if user would like to play again.
+     */
+    public void minesweeper() {
+        do {
+            runGame();
+        } while (playAgain());
+    }
+
+    /**
+     * Responsible for running individual Minesweeper games. Creates {@link Grid} object, gets input from the user, and
+     * executes
      * <code>Grid</code> methods in response to user input. Upon change in <code>gameState</code> executes response
      * according to new state.
      */
@@ -173,6 +184,19 @@ public class Minesweeper {
         return ((0 <= row && row < height) && (0 <= col && col < width));
     }
 
+    public boolean playAgain() {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.print("Would you like to play again?\nY/N: ");
+        while (true) {
+            String input = keyboard.nextLine();
+            if (input.equalsIgnoreCase("y")) {
+                return true;
+            } else if (input.equalsIgnoreCase("n")) {
+                return false;
+            }
+        }
+    }
+
     /**
      * Internal class used to easily move user input for {@link Minesweeper}.
      */
@@ -208,7 +232,7 @@ public class Minesweeper {
         /**
          * Empty constructor, used for variable initialization
          */
-        private ReturnInput(){
+        private ReturnInput() {
             this(Character.MIN_VALUE);
         }
     }
