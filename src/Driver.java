@@ -3,7 +3,8 @@ import MineSweeper.Minesweeper;
 /*
 EXTRA CREDIT CONSIDERATION
 I have added the following functionality that I would like evaluated for extra credit:
-    ** Allow the user to restart the game (three points)
+    ** Allow the user to restart the game (3 points)
+    ** Use recursion and implement a true game of minesweeper (15 points)
  */
 
 /**
