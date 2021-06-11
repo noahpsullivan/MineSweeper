@@ -26,20 +26,34 @@ public class Minesweeper {
      * according to new state.
      */
     public void runGame() {
+
+        // Default values. Will adjust when I have a moment
         int width = 12;
         int height = 10;
         int numMines = 10;
+
+        // Creates new Grid
         Grid gameBoard = new Grid(width, height, numMines);
+
+        // Initializes gameState Status checker
         Status gameState = Status.OK;
+
+        // Prints initial board
         System.out.println(gameBoard);
+
+        // Runs through user's turns
         while (gameState == Status.OK) {
 
-            // Input loop of doom
+            // Initializes fresh ReturnInput object
             ReturnInput input = new ReturnInput();
+
+            // Attempts to get input from user. Exception thrown if failed
             try {
                 System.out.println("Options: (U)ncover r c,   (F)lag r c,   (Q)uit");
                 input = getInput();
                 checkInput(input, width, height);
+
+            // Yells at you if bad input
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid Input");
             }
@@ -49,10 +63,11 @@ public class Minesweeper {
                 gameState = gameBoard.uncoverSquare(input.row, input.col);
             } else if (input.action == 'F') {
                 gameBoard.flagSquare(input.row, input.col);
-            } else {
+            } else if (input.action == 'Q') {
                 gameState = Status.QUIT;
             }
 
+            // Prints game board if OK -- means the game continues
             if (gameState == Status.OK) {
                 System.out.println(gameBoard);
             }
@@ -184,6 +199,11 @@ public class Minesweeper {
         return ((0 <= row && row < height) && (0 <= col && col < width));
     }
 
+    /**
+     * Asks the user if they'd like to play again. Continues asking until user provides a yes or no answer.
+     *
+     * @return boolean, <code>true</code> if the player wants to play again, <code>false</code> if not
+     */
     public boolean playAgain() {
         Scanner keyboard = new Scanner(System.in);
         System.out.print("Would you like to play again?\nY/N: ");
@@ -195,6 +215,14 @@ public class Minesweeper {
                 return false;
             }
         }
+    }
+
+    public void chooseLevel() {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Choose Difficulty");
+        System.out.println("(B)eginner -- 8 x 8, 8 mines");
+        System.out.println("(I)ntermediate -- 10 x 12, 10 mines");
+        System.out.println("(E)xpert -- 16 x 20, 50 mines");
     }
 
     /**
