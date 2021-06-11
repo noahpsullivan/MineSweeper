@@ -111,7 +111,11 @@ public class Grid {
                 if (rangeRow != 0 || rangeCol != 0) {
                     int checkX = row + rangeRow;
                     int checkY = col + rangeCol;
+
+                    // Makes sure it's looking on grid
                     if (((0 <= checkX) && (checkX < height)) && (0 <= checkY) && (checkY < width)) {
+
+                        // Get 'em, boys
                         if (grid[checkX][checkY] instanceof MineSquare) {
                             numMines++;
                         }
@@ -123,10 +127,27 @@ public class Grid {
     }
 
     /**
-     * Uncovers indicated {@link Square} and surrounding area if valid. If <code>Square</code> has no neighboring mines,
-     * uncovers a 5x5 grid. If <code>Square</code> has one neighboring mine, uncovers a 3x3 grid. If <code>Square</code>
-     * has more than one neighboring mine uncovers only the <code>Square</code>. Returns {@link Status} enum depending
-     * on outcome.
+     * <p>
+     * Attempts to uncover indicated {@link Square} object and then attempts to uncover adjacent <code>Square</code>
+     * objects. If the adjacent <code>Square</code> object has no neighboring mines then the function is recursively
+     * called on it as well. A diagram is included below, where the cell marked "<code>a</code>" is the
+     * <code>Square</code> object the function is called on and the cells marked "<code>_</code>" are
+     * <code>Square</code> objects checked by the function.
+     * </p>
+     *
+     * <pre>
+     *     [_][_][_]
+     *     [_][a][_]
+     *     [_][_][_]
+     * </pre>
+     *
+     * <p>
+     * The function is only recursively called on <code>Square</code> objects with no neighboring mines to reduce the
+     * odds of uncovering all squares in one swoop. There are increased odds of completing the game immediately when
+     * <code>Square</code> objects with neighboring mines are recursed upon due to the relatively low odds of one or
+     * more mines being entirely insulated from the others. It is still possible to do so using the no neighbors only
+     * method, but it is much less likely.
+     * </p>
      *
      * @param row int of grid square row to be uncovered
      * @param col int of grid square column to be uncovered
@@ -137,61 +158,64 @@ public class Grid {
      * <code>Status.OK</code> if game continues
      */
     public Status uncoverSquare(int row, int col) {
+
+        // Gives grid square a nice name for easy access
         Square square = grid[row][col];
+
+        // What if mine go boom
         if (square.isMine()) {
             return Status.MINE;
-        } else {
-            // Need to typecast to NumberSquare because getNeighborMines is not an abstract method in Square
-            NumberSquare numSquare = (NumberSquare) square;
-            int number = numSquare.getNeighborMines();
-            if (number == 0) {
-                if (grid[row][col].uncover()) {
-                    numSquaresUncovered++;
-                }
-                int[] range = {-2, -1, 0, 1, 2};
-                for (int rangeRow : range) {
-                    for (int rangeCol : range) {
-                        // Keeps it from checking its own square
-                        if (rangeRow != 0 || rangeCol != 0) {
-                            int checkX = row + rangeRow;
-                            int checkY = col + rangeCol;
-                            if (((0 <= checkX) && (checkX < height)) && (0 <= checkY) && (checkY < width)) {
-                                if (!(grid[checkX][checkY] instanceof MineSquare)) {
-                                    if (grid[checkX][checkY].uncover()) {
-                                        numSquaresUncovered++;
-                                    }
+        }
+
+        // Haha jk
+        else {
+            // Checks if this is a square that needs uncoverin'
+            if (square.uncover()) {
+                numSquaresUncovered++;
+            }
+
+            // Range allows only squares in immediate vicinity to be checked
+            int[] range = {-1, 0, 1};
+
+            // Iterates over squares around main square
+            for (int rangeRow : range) {
+                for (int rangeCol : range) {
+
+                    // Keeps it from checking its own square
+                    if (rangeRow != 0 || rangeCol != 0) {
+
+                        // Determines row/column of new square being checked
+                        int checkRow = row + rangeRow;
+                        int checkCol = col + rangeCol;
+
+                        // Makes sure it's on the grid too
+                        if (((0 <= checkRow) && (checkRow < height)) && (0 <= checkCol) && (checkCol < width)) {
+
+                            // After confirming gives it a name
+                            Square checkSquare = grid[checkRow][checkCol];
+
+                            // Makes sure this new square isn't a mine
+                            if (!(checkSquare instanceof MineSquare)) {
+
+                                // It's not a mine so we can typecast it as a number
+                                NumberSquare checkNumSquare = (NumberSquare) checkSquare;
+
+                                // Sees if uncover is successful
+                                if (checkNumSquare.uncover()) {
+                                    numSquaresUncovered++;
+
+                                    // If not touching any mines continues recursion
+                                    if (checkNumSquare.getNeighborMines() == 0)
+                                        uncoverSquare(checkRow, checkCol);
                                 }
                             }
                         }
                     }
-                }
-            } else if (number == 1) {
-                if (grid[row][col].uncover()) {
-                    numSquaresUncovered++;
-                }
-                int[] range = {-1, 0, 1};
-                for (int rangeRow : range) {
-                    for (int rangeCol : range) {
-                        // Keeps it from checking its own square
-                        if (rangeRow != 0 || rangeCol != 0) {
-                            int checkX = row + rangeRow;
-                            int checkY = col + rangeCol;
-                            if (((0 <= checkX) && (checkX < height)) && (0 <= checkY) && (checkY < width)) {
-                                if (!(grid[checkX][checkY] instanceof MineSquare)) {
-                                    if (grid[checkX][checkY].uncover()) {
-                                        numSquaresUncovered++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            } else {
-                if (square.uncover()) {
-                    numSquaresUncovered++;
                 }
             }
+
         }
+
         if (numSquaresUncovered == ((width * height) - numMines)) {
             return Status.WIN;
         } else {
@@ -205,14 +229,20 @@ public class Grid {
      * attempting to uncover.
      */
     public void exposeMines() {
+
+        // Iterates over grid squares
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
+
+                // Named it
                 Square square = grid[row][col];
+
+                // Uncovers mine squares, flagged or not
                 if (square instanceof MineSquare) {
                     if (square.isFlagged()) {
                         square.flagSquare();
                     }
-                    grid[row][col].uncover();
+                    square.uncover();
                 }
             }
         }
