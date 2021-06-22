@@ -29,7 +29,7 @@ public class Grid {
      * <p>
      * Creates the two dimensional array <code>grid</code> and randomly populates with given number of {@link
      * MineSquare} objects. After mines are placed all other indexes are filled by {@link NumberSquare} objects. The
-     * {@link NumberSquare#NumberSquare(int, int, int) neighborMines} parameter in the <code>NumberSquare</code>
+     * {@link NumberSquare#NumberSquare(int) neighborMines} parameter in the <code>NumberSquare</code>
      * constructor is filled using the {@link #getNeighbors(int, int) getNeighbors}, which runs independently of
      * <code>Square</code> initialization
      *
@@ -70,7 +70,7 @@ public class Grid {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 if (!(grid[row][col] instanceof MineSquare)) {
-                    grid[row][col] = new NumberSquare(getNeighbors(row, col), row, col);
+                    grid[row][col] = new NumberSquare(getNeighbors(row, col));
                 }
             }
         }

@@ -11,21 +11,13 @@ public class NumberSquare extends Square {
 
     private final int neighborMines;
 
-    // These don't do anything
-    private final int myRow;
-    private final int myCol;
-
     /**
      * Constructor for <code>NumberSquare</code> taking neighboring mines, row number, and row column
      *
      * @param neighborMines int containing number of neighboring mines
-     * @param myRow         int containing row number
-     * @param myCol         int containing column number
      */
-    public NumberSquare(int neighborMines, int myRow, int myCol) {
+    public NumberSquare(int neighborMines) {
         this.neighborMines = neighborMines;
-        this.myRow = myRow;
-        this.myCol = myCol;
     }
 
     /**
