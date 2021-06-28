@@ -44,27 +44,25 @@ public class Minesweeper {
         // Runs through user's turns
         while (gameState == Status.OK) {
 
-            // Initializes fresh ReturnInput object
-            ReturnInput input = new ReturnInput();
-
             // Attempts to get input from user. Exception thrown if failed
             try {
                 System.out.println("Options: (U)ncover r c,   (F)lag r c,   (Q)uit");
-                input = getInput();
+                ReturnInput input = getInput();
                 checkInput(input, width, height);
 
-            // Yells at you if bad input
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid Input");
+                // Executes validated user commands
+                if (input.action == 'U') {
+                    gameState = gameBoard.uncoverSquare(input.row, input.col);
+                } else if (input.action == 'F') {
+                    gameBoard.flagSquare(input.row, input.col);
+                } else if (input.action == 'Q') {
+                    gameState = Status.QUIT;
+                }
             }
 
-            // Executes validated user commands
-            if (input.action == 'U') {
-                gameState = gameBoard.uncoverSquare(input.row, input.col);
-            } else if (input.action == 'F') {
-                gameBoard.flagSquare(input.row, input.col);
-            } else if (input.action == 'Q') {
-                gameState = Status.QUIT;
+            // Yells at you if bad input
+            catch (IllegalArgumentException e) {
+                System.out.println("Invalid Input");
             }
 
             // Prints game board if OK -- means the game continues

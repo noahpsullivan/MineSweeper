@@ -169,7 +169,7 @@ public class Grid {
 
         // Haha jk
         else {
-            // Checks if this is a square that needs uncoverin'
+            // Checks if this is a square that needs uncovering
             if (square.uncover()) {
                 numSquaresUncovered++;
             }
@@ -234,11 +234,13 @@ public class Grid {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
 
-                // Named it
+                // Names square for easier typing
                 Square square = grid[row][col];
 
-                // Uncovers mine squares, flagged or not
+                // Uncovers mine squares
                 if (square instanceof MineSquare) {
+
+                    // De-flags flagged mines
                     if (square.isFlagged()) {
                         square.flagSquare();
                     }
