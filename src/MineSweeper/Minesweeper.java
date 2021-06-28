@@ -246,12 +246,5 @@ public class Minesweeper {
         private ReturnInput(char action) {
             this(action, -1, -1);
         }
-
-        /**
-         * Empty constructor, used for variable initialization
-         */
-        private ReturnInput() {
-            this(Character.MIN_VALUE);
-        }
     }
 }
